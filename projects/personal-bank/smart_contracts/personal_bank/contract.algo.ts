@@ -1,5 +1,4 @@
 import {
-  abimethod,
   Account,
   assert,
   BoxMap,
@@ -21,7 +20,6 @@ export class PersonalBank extends Contract {
    * @param payTxn - The payment transaction containing deposit information
    * @returns The total amount deposited by the sender after this transaction
    */
-  @abimethod()
   public deposit(payTxn: gtxn.PaymentTxn) {
     assert(payTxn.receiver === Global.currentApplicationAddress, 'Receiver must be the contract address')
     assert(payTxn.amount > 0, 'Deposit amount must be greater than zero')
@@ -44,7 +42,6 @@ export class PersonalBank extends Contract {
    * and resets their balance to zero. The sender must have a deposit to withdraw.
    * @returns The amount withdrawn (as UInt64)
    */
-  @abimethod()
   public withdraw() {
     const [depositedAmount, isDeposited] = this.depositors(Txn.sender).maybe()
     assert(isDeposited, 'No deposits found for this account')
